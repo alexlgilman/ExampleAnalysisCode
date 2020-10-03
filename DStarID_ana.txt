@@ -1,0 +1,75 @@
+#include "$ROOTIOROOT/share/jobOptions_ReadRec.txt"
+#include "$VERTEXFITROOT/share/jobOptions_VertexDbSvc.txt"
+#include "$SIMPLEPIDSVCROOT/share/jobOptions_SimplePIDSvc.txt"
+#include "$MAGNETICFIELDROOT/share/MagneticField.txt"
+#include "$MEASUREDECMSSVCROOT/share/anaOptions.txt"
+MeasuredEcmsSvc.ReadOneTime = true;
+MeasuredEcmsSvc.RunFrom = 43716;
+MeasuredEcmsSvc.RunTo = 47066;
+VertexDbSvc.ReadOneTime = true;
+VertexDbSvc.RunFrom = 43716;
+VertexDbSvc.RunTo = 47066;
+MagneticFieldSvc.ReadOneTime = true;
+MagneticFieldSvc.RunFrom = 43716;
+MagneticFieldSvc.RunTo = 47066;
+
+#include "$ABSCORROOT/share/jobOptions_AbsCor.txt"
+#include "$EVENTNAVIGATORROOT/share/EventNavigator.txt"  // <<------ Take this one out for DATA
+#include "$RUNEVENTNUMBERALGROOT/share/jobOptions_RunEventNumber.txt"
+//------------------------------------------------
+#include "$DTAGALGROOT/share/jobOptions_dTag.txt"
+//-----------------------------------------------
+LocalKaonSelector.useSimplePID = false;
+LocalPionSelector.useSimplePID = false;
+//------------------------------------------------
+//// Ds recon
+//DTag.DsReconstruction            = false;
+//DsReconstruction.DsList          = "$DTAGALGROOT/share/DsList.txt";
+//DsReconstruction.ReadBeamEFromDB = true;
+//DsReconstruction.UseCalibBeamE   = true;
+////
+//DsReconstruction.BeamE = 2.090;  // 4180
+////
+//DsReconstruction.UseVertexfit = false;
+////
+//// DsSelector.UseMbcCuts = true;
+//DsSelector.UseMbcCuts = false;
+//DsSelector.DMbcMinCut = 1.93;
+//DsSelector.DMbcMaxCut = 10.0;
+//DsSelector.UseDeltaECuts = false;
+//// DsSelector.UseDeltaMassCuts = true;
+//DsSelector.UseDeltaMassCuts = false;
+//DsSelector.DDeltaMassMinCut = -0.090;
+//DsSelector.DDeltaMassMaxCut =  0.090;
+//------------------------------------------------
+// D0 and D+ recon
+DTag.NeutralDReconstruction  = true;
+DTag.ChargedDReconstruction  = true;
+NeutralDReconstruction.D0List  = "$DTAGALGROOT/share/D0List.txt";
+ChargedDReconstruction.DpList  = "$DTAGALGROOT/share/DpList.txt";
+NeutralDReconstruction.ReadBeamEFromDB = true;
+NeutralDReconstruction.UseCalibBeamE   = true;
+ChargedDReconstruction.ReadBeamEFromDB = true;
+ChargedDReconstruction.UseCalibBeamE   = true;
+//
+NeutralDReconstruction.BeamE = 2.090;  // 4180
+ChargedDReconstruction.BeamE = 2.090;  // 4180
+//Below are used for 3770 analysis
+ChargedDSelector.UseDeltaECuts    = false;
+ChargedDSelector.UseMbcCuts       = false;
+ChargedDSelector.UseDeltaMassCuts = false;
+NeutralDSelector.UseDeltaECuts    = false;
+NeutralDSelector.UseMbcCuts       = false;
+NeutralDSelector.UseDeltaMassCuts = false;
+//------------------------------------------------
+#include "$DSTARIDALGROOT/share/anaOptions_DStarID.txt"
+
+
+MessageSvc.OutputLevel = 6;
+ApplicationMgr.EvtMax = -1;//Run over all events
+//ApplicationMgr.EvtMax = 2000;
+ApplicationMgr.HistogramPersistency = "ROOT";
+NTupleSvc.Output = {"FILE1 DATAFILE='DSTpDSTm_01_001.root' OPT='NEW' TYP='ROOT'"};
+EventCnvSvc.digiRootInputFile={"/besfs3/offline/data/703-1/4180/mc/40/dst/DSTpDSTm/DSTpDSTm_round40_001_IHEP.dst"};
+
+
