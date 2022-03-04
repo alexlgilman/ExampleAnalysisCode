@@ -1,0 +1,17 @@
+#! /bin/bash
+date
+hostname
+echo "========================================="
+
+source /afs/ihep.ac.cn/users/a/agilman/boss7.0.3p02/cmthome/setupCVS.sh
+source /afs/ihep.ac.cn/users/a/agilman/boss7.0.3p02/cmthome/setupCMT.sh
+source /afs/ihep.ac.cn/users/a/agilman/boss7.0.3p02/cmthome/setup.sh
+source /afs/ihep.ac.cn/users/a/agilman/boss7.0.3p02/workarea/TestRelease/*/cmt/setup.sh
+
+cd /besfs5/groups/psipp/psippgroup/public/agilman/ExampleAnalysisCode/MCGeneration/output/dst
+
+export ranseed=$RANDOM
+#
+boss.exe /besfs5/groups/psipp/psippgroup/public/agilman/ExampleAnalysisCode/MCGeneration/rec.txt
+
+#

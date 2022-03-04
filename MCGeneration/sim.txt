@@ -1,0 +1,45 @@
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+//*************job options for EvtGen***************
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+EvtDecay.userDecayTableName =
+"/besfs5/groups/psipp/psippgroup/public/agilman/ExampleAnalysisCode/MCGeneration/MinSemiLep_Eta_4180.DEC";
+EvtDecay.ReadMeasuredEcms = true;//4180
+//EvtDecay.ReadMeasuredEcms = false;//XYZ,4230
+EvtDecay.beamEnergySpread = 0.0012;
+EvtDecay.ParentParticle = "vpho";
+EvtDecay.statDecays = true;
+
+//**************job options for random number************************
+BesRndmGenSvc.RndmSeed = "$ranseed";//supply a random seed from external script
+
+//**************job options for detector simulation******************
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+
+//<><><><><><><><><><><><><><><><><><><><><><><><><><>
+// to make the two mc samples with the same T0,
+G4Svc.BoostLab = false;
+G4Svc.NBunch=1;
+G4Svc.BeamStartTime=640;
+G4Svc.BeamDeltaTime=0;
+//<><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+//configure for calibration constants
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+
+// run ID
+RealizationSvc.RunIdList = {43716,0,45105,45418,0,47066};//4180
+//RealizationSvc.RunIdList = {47543,0,48170};//4190
+//RealizationSvc.RunIdList = {48172,0,48713};//4200
+//RealizationSvc.RunIdList = {48714,0,49239};//4210
+//RealizationSvc.RunIdList = {49270,0,49787};//4220
+//RealizationSvc.RunIdList = {32239,0,33484};//4230
+
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile = "/besfs5/groups/psipp/psippgroup/public/agilman/ExampleAnalysisCode/MCGeneration/output/rtraw/example.rtraw";
+
+// OUTPUT PRINTOUT LEVEL
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel  = 6;
+
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = 10;

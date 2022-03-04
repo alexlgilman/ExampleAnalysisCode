@@ -1,0 +1,24 @@
+Particle vpho 4.178 0 #Set the total energy
+Decay vpho
+1.0  ConExc -100 94 95;
+# Use ConExc , 94 and 95 set for D_s*D + c.c. decays, see https://docbes3.ihep.ac.cn/DocDB/0001/000162/036/manual.pdf Page 5
+Enddecay
+
+# Set Allowed Decays for Ds+
+Decay D_s+
+# First argument is Branching fraction
+# Second set of arguments is final state particles
+# Third set of arguments is decay kinematic model
+ 1.00           K-   K+    pi+          D_DALITZ; 
+Enddecay
+
+# Set Allowed Decays for Ds-
+Decay D_s-
+# First argument is Branching fraction
+# Second set of arguments is final state particles
+# Third set of arguments is decay kinematic model
+ 1.00            eta  e- anti-nu_e      SLPOLE 0.452 0.274 0.0 1.0 0.0 0.0 0.0 0.0;         #[0.0283]gamma25
+Enddecay
+
+End
+# Note that any particles for which I do not specify the decays of inherit from the generic DECAY.DEC, which looks something like $BESEVTGENROOT/share/DECAY.DEC ($BESEVTGENROOT is set by your boss environment) 
