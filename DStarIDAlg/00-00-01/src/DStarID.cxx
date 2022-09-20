@@ -469,7 +469,21 @@ StatusCode DStarID::execute() {
     pi_mdcTrk -> setPidType(RecMdcKalTrack::pion);
 
     // Truth Matching: Compare simulated detector hits with generated trajectories to match a track with a generated particle
-    // The MCTKPIDCHG function can return the PDG code associated with a track or the code associated its parent. It can also be used to require that the PDG codes of the particle (2nd argument) and its parent (3rd argument) match certain values. See the MCTKPIDCHG function for more details.
+    /* 
+    MCTKPIDCHG(int tkID, int mcPDG, int MCParPDG, int GParPDG) is a function used to query the truth-level PDG code of a reconstructed track. All PDG codes are taken from https://pdg.lbl.gov/2022/mcdata/mc_particle_id_contents.html. 
+    It can be used to either require that a track match a certain generator-level profile or to return the generator-level information of the particle or its parent. It takes four arguments:
+    1. The first is the trackID of the track in question.
+    2. The second relates to the PDG code of the particle associated with the track. If a 0 is input, no requirement is made. If -1 is input, the function will output the PDG code of particle associated with the track. Any other argument will output a boolean related to the the requirement that the particle associated with the track matches the input argument (as well as any other requirements put in the other input arguments).
+    3. The third relates to the PDG code of the parent particle associated with the track. If a 0 is input, no requirement is made. If -1 is input, the function will output the PDG code of the parent particle associated with the track. Any other argument will output a boolean related to the the requirement that the parent particle associated with the track matches the input argument (as well as any other requirements put in the other input arguments).
+    4. The fourth relates to the PDG code of all descendents before the parent particle associated with the track. If a 0 is input, no requirement is made.  Any other argument will output a boolean related to the the requirement that any of the earlier descendents associated with the track matches the input argument (as well as any other requirements put in the other input arguments).
+
+    A few usage examples:
+    int track_pdg = MCTKPIDCHG(mdcTrk -> trackId(), -1, 0, 0); //Output the PDG code of the generated particled matched with the reconstructed track
+    int track_parent_pdg = MCTKPIDCHG(mdcTrk -> trackId(), 0,-1, 0); //Output the PDG code of the generated particled matched with the reconstructed track
+
+    int isPiPlusFromKSFromD0 = MCTKPIDCHG(mdcTrk -> trackId(),211 ,310, 421); //Output a boolean (0 or 1) describing if the track is a positive pion which directly decayed from a KS that descended from a D0  
+    int isPiMinusFromD0BarDirect = MCTKPIDCHG(mdcTrk -> trackId(),-211 ,-421, 0); //Output a boolean (0 or 1) describing if the track is a negative pion which directly decayed from an  anti-D0  
+    */
     int k_pdg = 0;
     int k_parent_pdg = 0;
     int pi_pdg = 0;
